@@ -1,0 +1,223 @@
+#+TITLE: GNU Emacs Configuration
+
+#+OPTIONS: num:nil ^:{}
+
+* Table of Contents
++ [[Custom Functions]]
+  + [['package' Function]]
+
++ [[Package Repositories]]
+  + [[MELPA Repository]]
+
++ [[Installing Packages]]
+  + [[General Utility Packages]]
+  + [[Theme Packages]]
+  + [[Language Packages]]
+
++ [[Package Setup]]
+  + [[Evil Mode Setup]]
+  + [[Dashboard Setup]]
+  + [[Page Break Lines]]
+  + [[Doom Modeline]]
+  + [[Org Superstar]]
+
++ [[Theme Setup]]
++ [[Dired Setup]]
++ [[Keybindings]]
+
++ [[Hooks]]
+  + [[Org Hooks]]
+    
+* Custom Functions
+This section contains my own custom functions
+
+** 'package' Function
+This function allows me to, instead of repeatedly entering the ~unless~ argument everytime, I will
+instead just have to enter:
+~(package '[PackageName])~
+
+Which makes it both easier and more efficient.
+
+#+BEGIN_SRC emacs-lisp
+(defun package(packageName)
+  "See if Package is installed, if not - install it"
+  (unless (package-installed-p packageName) (package-install packageName)))
+#+END_SRC
+
+* Package Repositories
+
+** MELPA Repository
+#+BEGIN_SRC emacs-lisp
+(require 'package)
+
+(add-to-list 'package-archives
+  '("melpa" . "https://melpa.org/packages/"))
+
+(package-refresh-contents)
+(package-initialize)
+#+END_SRC
+
+* Installing Packages
+** General Utility Packages
+#+BEGIN_SRC emacs-lisp
+(package 'evil)
+(package 'evil-collection)
+(package 'dashboard)
+(package 'doom-modeline)
+(package 'page-break-lines)
+(package 'writeroom-mode)
+#+END_SRC
+
+** Theme Packages
+#+BEGIN_SRC emacs-lisp
+(package 'doom-themes)
+(package 'all-the-icons)
+(package 'all-the-icons-dired)
+(package 'org-superstar)
+#+END_SRC
+
+** Language Packages
+#+BEGIN_SRC emacs-lisp
+(package 'haskell-mode)
+#+END_SRC
+
+* Package Setup
+
+** Evil Mode Setup
+Evil is the Vi-Keybinding layer for GNU Emacs. This allows me to use the Vim keybindings, including the commands that you can
+use in Vim, such as ~:w~, or even more advanced commands such as ~:%s/foo/bar/g~.
+
+There are 2 Evil packages installed, ~evil~ and ~evil-collection~. ~evil~ is the main keybinding layer, and ~evil-collection~
+is a collection of extra utilities.
+
+#+BEGIN_SRC emacs-lisp
+(setq evil-want-integration t)
+(setq evil-want-keybinding nil)
+
+(setq evil-vsplit-window-right t)
+(setq evil-split-window-above t)
+
+(evil-mode)
+(evil-collection-init)
+#+END_SRC
+
+** Dashboard Setup
+Dashboard is a nice little dashboard program for GNU Emacs, it has many features, and they are very nice. Because Dashboard can be
+configured so much, I encourage you to take a look at the [[ https://github.com/emacs-dashboard/emacs-dashboard/tree/7ae46300df5d22d3941ff9f10bc52d232985b628][Dashboard GitHub Page]], and make modifications and tweaks, and see what
+you can make it do!
+
+#+BEGIN_SRC emacs-lisp
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+
+(setq dashboard-show-shortcuts t)
+(setq dashboard-banner-logo-title "Welcome to GNU Emacs")
+(setq dashboard-startup-banner 'logo)
+
+(setq dashboard-items '((recents . 7)
+		  (bookmarks . 7)))
+
+
+(setq dashboard-set-heading-icons t)
+(setq dashboard-set-file-icons t)
+(setq dashboard-page-separator "\n\f\n")
+
+(dashboard-modify-heading-icons '((recents . "file-text")
+	                          (bookmarks . "book")))
+
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+#+END_SRC
+
+** Page Break Lines
+This package is mainly used for the separating lines on the [[Dashboard Setup][Dashboard]] Package.
+
+#+BEGIN_SRC emacs-lisp
+(require 'page-break-lines)
+(page-break-lines-mode)
+#+END_SRC
+
+** Doom Modeline
+Doom Modeline is the status bar at the bottom of the screen. This is the modeline that is used in the Emacs distribution
+"DOOM Emacs"
+
+#+BEGIN_SRC emacs-lisp
+(doom-modeline-mode 1)
+(setq dashboard-modeline-hud t)
+(setq dashboard-modeline-buffer-file-name-style 'truncate-upto-root)
+(setq doom-modeline-height 30
+      doom-modeline-bar-width 5
+      doom-modeline-persp-name t
+      doom-modeline-persp-icon t)
+
+#+END_SRC
+
+** Org Superstar
+Org Superstar is the package that gives the bullet points next to the heading names in Org documents
+
+#+BEGIN_SRC emacs-lisp
+(require 'org-superstar)
+(add-hook 'org-mode-hook (lambda () (org-superstar-mode 1)))
+#+END_SRC
+
+* Theme Setup
+This section is where I setup all the theme elements, so that's the colour scheme and fonts.
+
+#+BEGIN_SRC emacs-lisp
+(load-theme 'doom-one t)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+(scroll-bar-mode -1)
+
+(set-face-attribute 'default nil :family "Fira Code Retina" :height 140)
+
+(setq display-line-numbers 'relative)
+(global-display-line-numbers-mode 1)
+#+END_SRC
+
+* Dired Setup
+~dired~ is the GNU Emacs Directory Viewer/File Manager. By default, it has some unreasonable
+settings, that I don't like.
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'dired-mode-hook 'all-the-icons-dired-mode)
+(setq dired-listing-switches "-aBhl --group-directories-first")
+#+END_SRC
+
+* Keybindings
+This section contains my custom keybindings.
+
+Key:
+  C : Control
+  M : Meta/Alt
+  s : Super/Windows
+
+NOTE: Those only apply for the first key, unless you see something like ~C-M~, in which
+case it's ~Ctrl + Alt~
+
+#+BEGIN_SRC emacs-lisp
+(global-set-key (kbd "s-k") 'kill-current-buffer)
+(global-set-key (kbd "s-b") 'bookmark-set)
+(global-set-key (kbd "s-d") 'dired)
+
+(global-set-key (kbd "s-v") 'evil-window-vsplit)
+(global-set-key (kbd "s-h") 'evil-window-split)
+
+(global-set-key (kbd "s-i") 'ibuffer)
+(global-set-key (kbd "s-x") 'toggle-write-mode)
+#+END_SRC
+
+* Hooks
+This section contains my custom hooks, for behaviour that Emacs doesn't have by
+default
+
+** Org Hooks
+
+#+BEGIN_SRC emacs-lisp
+  (defun toggle-org-indenting ()
+      (org-indent-mode))
+
+  (add-hook 'org-mode-hook 'toggle-org-indenting)
+  (add-hook 'org-mode-hook 'outline-hide-body)
+  (add-hook 'org-mode-hook 'electric-indent-mode)
+#+END_SRC
+
