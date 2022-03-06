@@ -1,0 +1,19 @@
+-- -*- haskell -*-
+-- vim: filetype=haskell
+
+Config { overrideRedirect = False
+       , font = "xft:Ubuntu Mono NerdFont:size=14"
+       , bgColor  = "#1a1b26"
+       , fgColor  = "#c0caf5"
+       , hideOnStart = False
+       , allDesktops = True
+       , lowerOnStart = True
+       , position = Top
+       , commands = [ Run Memory ["--template", "Mem: <usedratio>%"] 10
+                    , Run XMonadLog
+                    , Run Com "/bin/bash" ["-c", "date +'%-d/%-m/%-y %-I:%M%p'"] "date" 60
+                    ]
+       , sepChar  = "%"
+       , alignSep = "}{"
+       , template = "%XMonadLog% }{ %date% "
+       }
