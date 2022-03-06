@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+# Alias File
+
+for command in pacman umount mount shutdown reboot; do
+    alias $command="sudo $command"
+done; unset command
+
+alias \
+    p="pacman" \
+    ls="ls --color=auto --group-directories-first" \
+    la="ls -lah" \
+    l="l -lh" \
+    nv="$(which nvim)" \
+    ea="$(which nvim) $HOME/.config/shell/aliasrc" \
+    ez="$(which nvim) $HOME/.zshrc" \
+    ka="killall" \
+    m="make" \
+    mc="make clean" \
+    smi="sudo make install" \
+    ncm="ncmpcpp"

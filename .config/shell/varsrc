@@ -1,0 +1,6 @@
+#!/usr/bin/env zsh
+
+export \
+    BROWSER="firefox" \
+    EDITOR="$(which nvim)" \
+    MANPAGER="sh -c 'col -bx | bat -l man -p'"

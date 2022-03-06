@@ -1,0 +1,12 @@
+# Starship Prompt Config File
+
+add_newline = false
+
+[character]
+format = "(bold cyan)$directory(reset)> "
+
+[line_break]
+disabled = true
+
+[package]
+disabled = true

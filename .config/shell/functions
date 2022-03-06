@@ -1,0 +1,27 @@
+#!/usr/bin/env zsh
+
+## Install Missing Features
+# ie. oh-my-zsh, starship and plugins
+installMissing() {
+    [ ! -d $HOME/.oh-my-zsh ] && installOMZ
+    [ "$(which starship)" = "starship not found" ] && sh -c "$(curl -fsSL https://starship.rs/install.sh)"
+}
+
+## Install Oh My ZSH
+installOMZ() {
+    git clone --depth=1 https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh
+    source $HOME/.oh-my-zsh/oh-my-zsh.sh
+}
+
+## Function to Extract Tarballs ##
+decom() {
+    case $1 in
+	*".tar.xz") tar xpf $1;;
+	*".tar.gz") tar xpf $1;;
+	*".tar") tar xpf $1;;
+	*".rar") unrar x $1;;
+	*".7z") 7z x $1;;
+	*".zip") unzip $1;;
+    esac
+}
+

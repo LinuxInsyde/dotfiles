@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+
+export \
+    BROWSER="firefox" \
+    EDITOR="$(which nvim)"

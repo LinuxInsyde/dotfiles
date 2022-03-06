@@ -1,0 +1,13 @@
+#+TITLE: Dotfiles
+#+AUTHOR: LinuxInsyde
+#+EMAIL: linuxinsyde@outlook.com
+
+#+OPTIONS: num:nil ^:{}
+
+* Table of Contents :toc:
+
+* About my dotfiles
+** What are 'dotfiles'?
+=dotfiles= are the config files in GNU/Linux distributions, typically they start with a period. A dot. ie. "*dot* files". Sometimes
+config files may be stored in =~/.config= or just in the user's home directory (=/home/[user]=)
+
