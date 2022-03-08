@@ -79,6 +79,8 @@ Which makes it both easier and more efficient.
 ** Language Packages
 #+BEGIN_SRC emacs-lisp
 (package 'haskell-mode)
+(package 'vimrc-mode)
+(package 'lua-mode)
 #+END_SRC
 
 * Package Setup
